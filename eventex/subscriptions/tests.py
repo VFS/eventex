@@ -1,3 +1,4 @@
+from django.core import mail
 from django.test import TestCase
 from eventex.subscriptions.forms import SubscriptionForm
 
@@ -35,3 +36,20 @@ class SubscribeTest(TestCase):
         """"Form must have 4 fields"""
         form = self.resp.context['form']
         self.assertSequenceEqual(['name', 'cpf', 'email', 'phone'], list(form.fields))
+
+class SubscribePostTest(TestCase):
+    def setUp(self):
+        data = dict(name="Henrique Bastos", cpf='33333333333', email="henrique@bastos.net", phone='11-99999-9999')
+        self.resp = self.client.post('/inscricao/', data)
+
+    def test_post(self):
+        """Valid POST should redirect to /inscricao/"""
+        self.assertEqual(302, self.resp.status_code)
+
+    def test_send_subscribe_email(self):
+        self.assertEqual(1, len(mail.outbox))
+
+    def test_subscription_email_subject(self):
+        email = mail.outbox[0]
+        expect = 'Confirmação de Inscrição'
+        self.assertEqual(expect, email.subject)
