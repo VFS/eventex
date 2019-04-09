@@ -1,8 +1,8 @@
 language: python
 python:
-  - "3.7"
+  - "3.6"
 install:
-  - cp contrib/env-sample .env
+  - cp contrib/env-sample eventex/.env
   - pip install -q -r requirements.txt
-stript:
+script:
   - python manage.py test
