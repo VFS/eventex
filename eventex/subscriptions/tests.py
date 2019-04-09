@@ -62,12 +62,12 @@ class SubscribePostTest(TestCase):
 
     def test_subscription_email_from(self):
         email = mail.outbox[0]
-        expect = "contato@eventex.com.br"
+        expect = "contato@eventex.labs.vfs.io"
         self.assertEqual(expect, email.from_email)
 
     def test_subscription_email_to(self):
         email = mail.outbox[0]
-        expect = ['contato@eventex.com.br', "henrique@bastos.net"]
+        expect = ['contato@eventex.labs.vfs.io', "henrique@bastos.net"]
         self.assertEqual(expect, email.to)
 
     def test_subscription_email_body(self):
@@ -96,3 +96,16 @@ class SubscribeInvalidPostTest(TestCase):
     def test_form_has_errors(self):
         form = self.resp.context['form']
         self.assertTrue(form.errors)
+
+
+class SubscribeSuccessMessage(TestCase):
+    def test_message(self):
+        data = dict(
+            name="Henrique Bastos",
+            cpf="33333333333",
+            email="henrique@bastos.net",
+            phone="11-99999-9999",
+        )
+
+        response = self.client.post('/inscricao/', data, follow=True)
+        self.assertContains(response, 'Inscrição realizada com sucesso!')

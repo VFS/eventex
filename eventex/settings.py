@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eventex.core',
     'eventex.subscriptions',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -123,10 +124,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+
 # Email configuration
 EMAIL_BACKEND = env("EMAIL_BACKEND")  # "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_PORT = env("EMAIL_PORT")
-EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+if EMAIL_BACKEND == "anymail.backends.sendgrid.EmailBackend":
+    ANYMAIL = {'SENDGRID_API_KEY': env("SENDGRID_API_KEY")}
+
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = env("SERVER_EMAIL")
