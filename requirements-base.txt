@@ -1,0 +1,8 @@
+dj-static==0.0.6
+Django==2.2
+django-environ==0.4.5
+pytz==2018.9
+sqlparse==0.3.0
+static3==0.7.0
+django-anymail[SendGrid]==6.0
+django-extensions==2.1.6

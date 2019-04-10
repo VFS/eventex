@@ -53,6 +53,8 @@ coverage.xml
 # Django stuff:
 staticfiles/
 mediafiles/
+db.sqlite3
+.idea/
 
 # Sphinx documentation
 docs/_build/

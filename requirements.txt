@@ -1,3 +1,5 @@
--r requirements-dev.txt
+-r requirements-base.txt
 gunicorn==19.8.1
 psycopg2==2.7.7
+
+
